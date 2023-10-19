@@ -20,7 +20,12 @@ int main()
         // Begin the drawing phase
         BeginDrawing();
 
-        // (Your game logic and drawing code will go here)
+        // Drawing circle
+        DrawCircle(screen_width / 2, screen_height / 2, 20, WHITE);
+
+        // Drwaing Rectangle
+        DrawRectangle(10, screen_height / 2 - 60, 25, 120, WHITE);
+        DrawRectangle(screen_width - 35, screen_height / 2 - 60, 25, 120, WHITE);
 
         // End the drawing phase
         EndDrawing();
