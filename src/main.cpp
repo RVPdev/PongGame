@@ -1,6 +1,30 @@
 // Include the Raylib header for access to its functions and types
 #include <raylib.h>
 
+// Create ball class
+
+class Ball
+{
+public:
+    float x, y;
+    int speed_x, speed_y;
+    int radius;
+
+    void Draw()
+    {
+        DrawCircle(x, y, radius, WHITE);
+    }
+
+    void Update()
+    {
+        x += speed_x;
+        y += speed_y;
+    }
+};
+
+// Create ball object
+Ball ball;
+
 // Entry point for the program
 int main()
 {
@@ -14,14 +38,23 @@ int main()
     // Set the target frames per second (FPS)
     SetTargetFPS(60);
 
+    ball.radius = 20;
+    ball.x = screen_width / 2;
+    ball.y = screen_height / 2;
+    ball.speed_x = 7;
+    ball.speed_y = 7;
+
     // Main game loop; continues until the window is closed
     while (WindowShouldClose() == false)
     {
         // Begin the drawing phase
         BeginDrawing();
 
+        // Ball movement, just updating ball position
+        ball.Update();
+
         // Drawing circle
-        DrawCircle(screen_width / 2, screen_height / 2, 20, WHITE);
+        ball.Draw();
 
         // Drwaing Rectangle
         DrawRectangle(10, screen_height / 2 - 60, 25, 120, WHITE);
