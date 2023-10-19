@@ -27,6 +27,9 @@ int main()
         DrawRectangle(10, screen_height / 2 - 60, 25, 120, WHITE);
         DrawRectangle(screen_width - 35, screen_height / 2 - 60, 25, 120, WHITE);
 
+        // Draw Court Line
+        DrawLine(screen_width / 2, 0, screen_width / 2, screen_height, WHITE);
+
         // End the drawing phase
         EndDrawing();
     }
