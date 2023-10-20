@@ -43,6 +43,31 @@ public:
     {
         DrawRectangle(x, y, width, height, WHITE);
     }
+
+    void Update()
+    {
+        if (IsKeyDown(KEY_UP))
+        {
+            y = y - speed;
+        }
+        if (IsKeyDown(KEY_DOWN))
+        {
+            y = y + speed;
+        }
+
+        if (y <= 0)
+        {
+            y = 0;
+        }
+        if (y + height >= GetScreenHeight())
+        {
+            y = GetScreenHeight() - height;
+        }
+    }
+};
+
+class CpuPaddle : public Paddle
+{
 };
 
 // Create ball object
@@ -50,6 +75,7 @@ Ball ball;
 
 //  Create paddle object
 Paddle player;
+CpuPaddle cpu;
 
 // Entry point for the program
 int main()
@@ -76,6 +102,12 @@ int main()
     player.y = screen_height / 2 - player.height / 2;
     player.speed = 6;
 
+    cpu.width = 25;
+    cpu.height = 120;
+    cpu.x = 10;
+    cpu.y = screen_height / 2 - cpu.height / 2;
+    cpu.speed = 6;
+
     // Main game loop; continues until the window is closed
     while (WindowShouldClose() == false)
     {
@@ -84,6 +116,7 @@ int main()
 
         // Ball movement, just updating ball position
         ball.Update();
+        player.Update();
 
         // Clearing Background
         ClearBackground(BLACK);
@@ -92,7 +125,7 @@ int main()
         ball.Draw();
 
         // Drwaing Rectangle
-        DrawRectangle(10, screen_height / 2 - 60, 25, 120, WHITE);
+        cpu.Draw();
         player.Draw();
 
         // Draw Court Line
