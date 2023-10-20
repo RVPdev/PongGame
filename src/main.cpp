@@ -19,11 +19,37 @@ public:
     {
         x += speed_x;
         y += speed_y;
+
+        if (y + radius >= GetScreenHeight() || y - radius <= 0)
+        {
+            speed_y *= -1;
+        }
+
+        if (x + radius >= GetScreenWidth() || x - radius <= 0)
+        {
+            speed_x *= -1;
+        }
+    }
+};
+
+class Paddle
+{
+public:
+    float x, y;
+    float width, height;
+    int speed;
+
+    void Draw()
+    {
+        DrawRectangle(x, y, width, height, WHITE);
     }
 };
 
 // Create ball object
 Ball ball;
+
+//  Create paddle object
+Paddle player;
 
 // Entry point for the program
 int main()
@@ -44,6 +70,12 @@ int main()
     ball.speed_x = 7;
     ball.speed_y = 7;
 
+    player.width = 25;
+    player.height = 120;
+    player.x = screen_width - player.width - 10;
+    player.y = screen_height / 2 - player.height / 2;
+    player.speed = 6;
+
     // Main game loop; continues until the window is closed
     while (WindowShouldClose() == false)
     {
@@ -53,12 +85,15 @@ int main()
         // Ball movement, just updating ball position
         ball.Update();
 
+        // Clearing Background
+        ClearBackground(BLACK);
+
         // Drawing circle
         ball.Draw();
 
         // Drwaing Rectangle
         DrawRectangle(10, screen_height / 2 - 60, 25, 120, WHITE);
-        DrawRectangle(screen_width - 35, screen_height / 2 - 60, 25, 120, WHITE);
+        player.Draw();
 
         // Draw Court Line
         DrawLine(screen_width / 2, 0, screen_width / 2, screen_height, WHITE);
