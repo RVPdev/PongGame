@@ -34,6 +34,20 @@ public:
 
 class Paddle
 {
+
+protected:
+
+    void LimitMovement() {
+        if (y <= 0)
+        {
+            y = 0;
+        }
+        if (y + height >= GetScreenHeight())
+        {
+            y = GetScreenHeight() - height;
+        }
+    }
+
 public:
     float x, y;
     float width, height;
@@ -55,19 +69,27 @@ public:
             y = y + speed;
         }
 
-        if (y <= 0)
-        {
-            y = 0;
-        }
-        if (y + height >= GetScreenHeight())
-        {
-            y = GetScreenHeight() - height;
-        }
+        LimitMovement();
     }
 };
 
 class CpuPaddle : public Paddle
 {
+public:
+    void Update(int ball_y)
+    {
+
+        if (y + height / 2 > ball_y)
+        {
+            y = y - speed;
+        }
+        if (y + height / 2 <= ball_y)
+        {
+            y = y + speed;
+        }
+
+        LimitMovement();
+    }
 };
 
 // Create ball object
@@ -117,6 +139,7 @@ int main()
         // Ball movement, just updating ball position
         ball.Update();
         player.Update();
+        cpu.Update(ball.y);
 
         // Clearing Background
         ClearBackground(BLACK);
