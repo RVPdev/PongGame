@@ -3,40 +3,47 @@
 
 // Create ball class
 
+// Ball class definition
 class Ball
 {
 public:
-    float x, y;
-    int speed_x, speed_y;
-    int radius;
+    // Ball properties
+    float x, y; // Position
+    int speed_x, speed_y; // Speed in x and y directions
+    int radius; // Radius of the ball
 
+    // Draw the ball on the screen
     void Draw()
     {
         DrawCircle(x, y, radius, WHITE);
     }
 
+    // Update the ball's position and handle wall collisions
     void Update()
     {
+        // Update position based on speed
         x += speed_x;
         y += speed_y;
 
+        // Check for collision with top and bottom walls
         if (y + radius >= GetScreenHeight() || y - radius <= 0)
         {
-            speed_y *= -1;
+            speed_y *= -1; // Reverse y-direction
         }
 
+        // Check for collision with left and right walls
         if (x + radius >= GetScreenWidth() || x - radius <= 0)
         {
-            speed_x *= -1;
+            speed_x *= -1; // Reverse x-direction
         }
     }
 };
 
+// Paddle class definition
 class Paddle
 {
-
 protected:
-
+    // Limit the paddle's vertical movement within the screen
     void LimitMovement() {
         if (y <= 0)
         {
@@ -49,48 +56,59 @@ protected:
     }
 
 public:
-    float x, y;
-    float width, height;
-    int speed;
+    // Paddle properties
+    float x, y; // Position
+    float width, height; // Dimensions
+    int speed; // Movement speed
 
+    // Draw the paddle on the screen
     void Draw()
     {
         DrawRectangle(x, y, width, height, WHITE);
     }
 
+    // Update the paddle's position based on user input
     void Update()
     {
+        // Move up
         if (IsKeyDown(KEY_UP))
         {
             y = y - speed;
         }
+        // Move down
         if (IsKeyDown(KEY_DOWN))
         {
             y = y + speed;
         }
 
+        // Limit the paddle's movement
         LimitMovement();
     }
 };
 
+// CpuPaddle class definition, inheriting from Paddle
 class CpuPaddle : public Paddle
 {
 public:
+    // Update the CPU paddle's position based on the ball's y-coordinate
     void Update(int ball_y)
     {
-
+        // Move up if the ball is above the paddle's center
         if (y + height / 2 > ball_y)
         {
             y = y - speed;
         }
+        // Move down if the ball is below or at the paddle's center
         if (y + height / 2 <= ball_y)
         {
             y = y + speed;
         }
 
+        // Limit the paddle's movement
         LimitMovement();
     }
 };
+
 
 // Create ball object
 Ball ball;
