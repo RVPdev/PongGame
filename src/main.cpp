@@ -1,7 +1,9 @@
 // Include the Raylib header for access to its functions and types
 #include <raylib.h>
 
-// Create ball class
+// score
+int player_score = 0;
+int cpu_score = 0;
 
 // Ball class definition
 class Ball
@@ -32,10 +34,35 @@ public:
         }
 
         // Check for collision with left and right walls
-        if (x + radius >= GetScreenWidth() || x - radius <= 0)
+        if (x + radius >= GetScreenWidth()) //* Cpus scores a point
         {
-            speed_x *= -1; // Reverse x-direction
+            cpu_score++;
+            ResetBall();
         }
+        if (x - radius <= 0) //* Player scores a point
+        {
+            player_score++;
+            ResetBall();
+        }
+    }
+
+    // Reset the ball's position and speed
+    void ResetBall()
+    {
+        // Reset the ball's x-coordinate to the horizontal center of the screen
+        x = GetScreenWidth() / 2;
+
+        // Reset the ball's y-coordinate to the vertical center of the screen
+        y = GetScreenHeight() / 2;
+
+        // Array containing two choices for speed direction: -1 or 1
+        int speed_choices[2] = {-1, 1};
+
+        // Randomly set the ball's horizontal speed direction
+        speed_x *= speed_choices[GetRandomValue(0, 1)];
+
+        // Randomly set the ball's vertical speed direction
+        speed_y *= speed_choices[GetRandomValue(0, 1)];
     }
 };
 
@@ -186,6 +213,9 @@ int main()
 
         // Draw Court Line
         DrawLine(screen_width / 2, 0, screen_width / 2, screen_height, WHITE);
+
+        DrawText(TextFormat("%i", cpu_score), screen_width / 4 - 20, 20, 80, WHITE);
+        DrawText(TextFormat("%i", player_score), 3 * screen_width / 4 - 20, 20, 80, WHITE);
 
         // End the drawing phase
         EndDrawing();
