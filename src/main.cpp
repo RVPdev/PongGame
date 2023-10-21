@@ -8,9 +8,9 @@ class Ball
 {
 public:
     // Ball properties
-    float x, y; // Position
+    float x, y;           // Position
     int speed_x, speed_y; // Speed in x and y directions
-    int radius; // Radius of the ball
+    int radius;           // Radius of the ball
 
     // Draw the ball on the screen
     void Draw()
@@ -44,7 +44,8 @@ class Paddle
 {
 protected:
     // Limit the paddle's vertical movement within the screen
-    void LimitMovement() {
+    void LimitMovement()
+    {
         if (y <= 0)
         {
             y = 0;
@@ -57,9 +58,9 @@ protected:
 
 public:
     // Paddle properties
-    float x, y; // Position
+    float x, y;          // Position
     float width, height; // Dimensions
-    int speed; // Movement speed
+    int speed;           // Movement speed
 
     // Draw the paddle on the screen
     void Draw()
@@ -109,7 +110,6 @@ public:
     }
 };
 
-
 // Create ball object
 Ball ball;
 
@@ -130,23 +130,26 @@ int main()
     // Set the target frames per second (FPS)
     SetTargetFPS(60);
 
-    ball.radius = 20;
-    ball.x = screen_width / 2;
-    ball.y = screen_height / 2;
-    ball.speed_x = 7;
-    ball.speed_y = 7;
+    // Initialize Ball attributes
+    ball.radius = 20;           // Set the radius of the ball to 20 units
+    ball.x = screen_width / 2;  // Start the ball at the horizontal center of the screen
+    ball.y = screen_height / 2; // Start the ball at the vertical center of the screen
+    ball.speed_x = 7;           // Set the ball's horizontal speed to 7 units per frame
+    ball.speed_y = 7;           // Set the ball's vertical speed to 7 units per frame
 
-    player.width = 25;
-    player.height = 120;
-    player.x = screen_width - player.width - 10;
-    player.y = screen_height / 2 - player.height / 2;
-    player.speed = 6;
+    // Initialize Player Paddle attributes
+    player.width = 25;                                // Set the width of the player's paddle to 25 units
+    player.height = 120;                              // Set the height of the player's paddle to 120 units
+    player.x = screen_width - player.width - 10;      // Position the player's paddle near the right edge of the screen
+    player.y = screen_height / 2 - player.height / 2; // Center the player's paddle vertically
+    player.speed = 6;                                 // Set the player's paddle speed to 6 units per frame
 
-    cpu.width = 25;
-    cpu.height = 120;
-    cpu.x = 10;
-    cpu.y = screen_height / 2 - cpu.height / 2;
-    cpu.speed = 6;
+    // Initialize CPU Paddle attributes
+    cpu.width = 25;                             // Set the width of the CPU's paddle to 25 units
+    cpu.height = 120;                           // Set the height of the CPU's paddle to 120 units
+    cpu.x = 10;                                 // Position the CPU's paddle near the left edge of the screen
+    cpu.y = screen_height / 2 - cpu.height / 2; // Center the CPU's paddle vertically
+    cpu.speed = 6;                              // Set the CPU's paddle speed to 6 units per frame
 
     // Main game loop; continues until the window is closed
     while (WindowShouldClose() == false)
